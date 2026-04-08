@@ -9,31 +9,31 @@ import java.util.Optional;
 
 @Service
 public class ProductService implements ProductInterface {
-    private final ProductRepository userRepository;
+    private final ProductRepository productRepositoryRepository;
 
     public ProductService(ProductRepository userRepository) {
-        this.userRepository = userRepository;
+        this.productRepositoryRepository = userRepository;
     }
 
     @Override
     public List<Product> obtenerProductos() {
-        return userRepository.findAll();
+        return productRepositoryRepository.findAll();
     }
 
     @Override
     public Optional<Product> obtenerProducto(String id) {
-        return userRepository.findById(id);
+        return productRepositoryRepository.findById(id);
     }
 
     @Override
     public Product guardarDatos(Product guardarUsuario) {
-        return userRepository.save(guardarUsuario);
+        return productRepositoryRepository.save(guardarUsuario);
     }
 
     @Override
     public String borrarProducto(String id) {
-        if (userRepository.existsById(id)){
-            userRepository.deleteById(id);
+        if (productRepositoryRepository.existsById(id)){
+            productRepositoryRepository.deleteById(id);
             return "Se elimino con exito";
         }else {
             return "No se encontro id relacionado";
@@ -43,7 +43,7 @@ public class ProductService implements ProductInterface {
 
     @Override
     public void actualizarProducto(String id, Product actualizarUser) {
-        Product update = userRepository.findById(id).orElse(null);
+        Product update = productRepositoryRepository.findById(id).orElse(null);
 
         if (update != null){
             update.setNombre(actualizarUser.getNombre());
@@ -55,6 +55,7 @@ public class ProductService implements ProductInterface {
             update.setStock_minimo(actualizarUser.getStock_minimo());
             update.setPrecio_venta(actualizarUser.getPrecio_venta());
             update.setEstado(actualizarUser.getEstado());
+            productRepositoryRepository.save(update);
         }else {
             throw new RuntimeException("No se encontro id relacionado para actualizar" + id);
         }

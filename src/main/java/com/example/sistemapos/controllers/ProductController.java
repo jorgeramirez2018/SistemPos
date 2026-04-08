@@ -55,7 +55,7 @@ public class ProductController {
             return ResponseEntity.badRequest().body("Error: El ID no puede estar vacío");
         }
     }
-    @PutMapping("update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> actualizarProducto(@PathVariable("id")String id, Product acualizaar){
         userService.actualizarProducto(id,acualizaar);
         return ResponseEntity.ok("Seactualizo");

@@ -51,6 +51,7 @@ public class UserService implements UserInterface{
             update.setEstado(actualizarUsuario.getEstado());
             update.setDocumentoIdentidad(actualizarUsuario.getDocumentoIdentidad());
             update.setPassword(actualizarUsuario.getPassword());
+            userRepository.save(update);
         }else {
             throw new RuntimeException("No se encontro id relacionado: " + id);
         }
