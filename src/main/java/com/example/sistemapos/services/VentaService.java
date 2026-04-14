@@ -1,7 +1,9 @@
 package com.example.sistemapos.services;
 
 import com.example.sistemapos.models.DetalleVenta;
+import com.example.sistemapos.models.User;
 import com.example.sistemapos.models.Venta;
+import com.example.sistemapos.repositories.UserRepository;
 import com.example.sistemapos.repositories.VentaRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,11 @@ import java.util.Optional;
 @Service
 public class VentaService implements VentaInterface{
     private final VentaRepository ventaRepository;
+    private final UserRepository  user;
 
-    public VentaService(VentaRepository ventaRepository) {
+    public VentaService(VentaRepository ventaRepository, UserRepository user) {
         this.ventaRepository = ventaRepository;
+        this.user = user;
     }
 
     @Override
@@ -27,6 +31,9 @@ public class VentaService implements VentaInterface{
 
     @Override
     public Venta guardarVenta(Venta guardarVenta) {
+      if (!user.existsById(guardarVenta.getIdUsuario())){
+         throw new RuntimeException("El id del usuario no exite:" +guardarVenta.getIdUsuario());
+      }
         return ventaRepository.save(guardarVenta);
     }
 
